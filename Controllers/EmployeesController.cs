@@ -62,7 +62,8 @@ namespace JWTAuthentication.Controllers
                 try
                 {
                    var mapper = new EmployeeMapper();
-                   var employee = mapper.EmployeeDtoToEmployee(employeeDTO);
+                   Employee employee = mapper.EmployeeDtoToEmployee(employeeDTO);
+
                    await _context.Employees.AddAsync(employee);
                    int action = await _context.SaveChangesAsync();
 
