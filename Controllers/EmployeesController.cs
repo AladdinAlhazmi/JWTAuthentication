@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JWTAuthentication.DTOs.Employee;
+using JWTAuthentication.Mapper;
 
 namespace JWTAuthentication.Controllers
 {
@@ -54,12 +55,14 @@ namespace JWTAuthentication.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Post(Employee employee)
+        public async Task<IActionResult> Post(EmployeeDTO employeeDTO)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                   var mapper = new EmployeeMapper();
+                   var employee = mapper.EmployeeDtoToEmployee(employeeDTO);
                    await _context.Employees.AddAsync(employee);
                    int action = await _context.SaveChangesAsync();
 
